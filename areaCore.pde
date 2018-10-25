@@ -4,11 +4,14 @@ enum areaCoreType { VOID, WALL, BUMP, LAVA };
 class areaCore extends area {
   
   areaCoreType type;
+  boolean isActive;
   Body body;
   
   public areaCore() {
     super();
     type = areaCoreType.VOID;
+    
+    isActive = true;
     
     makeBody();
     reset();
@@ -18,6 +21,9 @@ class areaCore extends area {
     
     // Area ptx
     super();
+    
+    
+    isActive = true;
 
     id      = _area.id;
     hue     = _area.hue;

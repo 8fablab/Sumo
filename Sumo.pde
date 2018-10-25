@@ -121,7 +121,10 @@ void draw() {
   myPtxInter.mFbo.stroke(255);
 
   for (areaCore it : myMap)
-        myPtxInter.drawArea(it);
+  {
+    if(it.isActive)
+      myPtxInter.drawArea(it);
+  }
         
   player1.drawMe();
   player2.drawMe();
@@ -347,7 +350,34 @@ void beginContact(Contact cp  ) {
         if(myP.id == 2)
           ScoreP2 += 10;
          */ 
-        Coin.play();
+
+          
+       if(myA.isActive == true)
+       {
+           if(!Coin.isPlaying())
+             Coin.play();
+             
+           myA.isActive = false;
+           
+           ArrayList<areaCore> Walls = new ArrayList<areaCore>();
+           
+           for (areaCore it : myMap)
+           {
+               if(it.type == areaCoreType.WALL && it != myA)
+               {
+                 it.isActive = false;
+                 Walls.add(it);
+               }
+           }
+           
+           if(Walls.size() == 0)
+             myA.isActive = true;
+           
+           else
+           {
+              Walls.get((int)(Math.random()) * Walls.size()).isActive = true;
+           }
+       }
     }
     
   }
