@@ -23,6 +23,8 @@ char scanKey = ' ';
 char configKey = 'h';
 // ===== =============== =====
 
+int WallNumber;
+int CurrentWall = 0;
 
 // TODO: HERITAGE CONSTRUCTEUR DANS AREACORE + typeArea : BUMP, WALL,  LAVA ...
 
@@ -375,7 +377,13 @@ void beginContact(Contact cp  ) {
            
            else
            {
-              Walls.get((int)(Math.random()) * Walls.size()).isActive = true;
+             WallNumber = Walls.size();
+             if(CurrentWall >= WallNumber-1fs)
+               CurrentWall = 0;
+             else
+               CurrentWall ++;
+             
+             Walls.get(CurrentWall).isActive = true;
            }
        }
     }
