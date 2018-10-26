@@ -21,7 +21,9 @@ boolean isScanning, isInConfig;
 ptx_inter myPtxInter;
 char scanKey = ' ';
 char configKey = 'h';
-// ===== =============== =====
+// ===== =============== =====1
+
+int ScoreP1 = 0, ScoreP2 = 0;
 
 int WallNumber;
 int CurrentWall = 0;
@@ -131,6 +133,15 @@ void draw() {
   player1.drawMe();
   player2.drawMe();
 
+  String ScoreStr = "Player 1 : "  + ScoreP1 + "\n";
+  
+  myPtxInter.mFbo.textAlign(LEFT);
+  myPtxInter.mFbo.fill(255, 255,0);
+  myPtxInter.mFbo.text(ScoreStr, 50, 100);
+  ScoreStr = "Player 2 : "  + ScoreP2 +"\n";
+  myPtxInter.mFbo.fill(255, 0, 255);
+  myPtxInter.mFbo.text(ScoreStr, 50, 140);
+  
   myPtxInter.mFbo.endDraw();
   myPtxInter.displayFBO();
 }
@@ -346,18 +357,18 @@ void beginContact(Contact cp  ) {
     {      
         System.out.println("----> Points");
         
-       /* if(myP.id == 1)
-          ScoreP1 += 10;
-        
-        if(myP.id == 2)
-          ScoreP2 += 10;
-         */ 
-
           
        if(myA.isActive == true)
        {
            if(!Coin.isPlaying())
+           {
              Coin.play();
+               if(myP.id == 1)
+              ScoreP1 += 10;
+              
+              if(myP.id == 2)
+              ScoreP2 += 10;
+           }
              
            myA.isActive = false;
            
@@ -378,7 +389,7 @@ void beginContact(Contact cp  ) {
            else
            {
              WallNumber = Walls.size();
-             if(CurrentWall >= WallNumber-1fs)
+             if(CurrentWall >= WallNumber-1)
                CurrentWall = 0;
              else
                CurrentWall ++;
